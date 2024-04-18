@@ -1,0 +1,38 @@
+.App {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.shopping-card {
+  justify-content: space-between;
+  background-color: bisque;
+  padding: 10px 30px;
+}
+
+.shopping-card button {
+  height: 33px;
+  background: transparent;
+  padding: 0 10px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+}
+
+.shopping-card button:hover {
+  border-bottom: 1px solid;
+}
+
+.product-item {
+  padding: 20px;
+}
