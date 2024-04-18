@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from "react";
+//Aashna Firozbhai Chopra
+//Student no- 8919642
+//achopra9642@contestogac.on.ca
 
+import React, { useState, useEffect } from "react";
+import "./AccountPage.css";
+import { useNavigation } from "react-router-dom";
 const AccountPage = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     address: "",
+    country: "",
+    pincode: "",
+    phone: "",
   });
+  const [registered, setRegistered] = useState(false);
 
   useEffect(() => {
-    // Fetch user details from localStorage when component mounts
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
       setUser(storedUser);
@@ -16,12 +24,10 @@ const AccountPage = () => {
   }, []);
 
   useEffect(() => {
-    // Update localStorage whenever user state changes
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   const handleChange = (e) => {
-    // Update user state when form fields change
     setUser({
       ...user,
       [e.target.name]: e.target.value,
@@ -29,46 +35,85 @@ const AccountPage = () => {
   };
 
   const handleSubmit = (e) => {
-    // Prevent the default form submission behavior
     e.preventDefault();
-    // Implement logic to handle form submission, like updating user data in a database
-    console.log("User details submitted:", user);
-    // You can also redirect the user to another page after form submission if needed
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Registration successful", data);
+        const userId = data._id;
+        localStorage.setItem("userId", userId);
+        setRegistered(true);
+        // Optionally, you can redirect the user to another page after successful registration
+        // For example, you can redirect them to the login page
+        // window.location.href = "/login";
+      })
+      .catch((error) => {
+        console.error("Error registering user:", error);
+      });
   };
 
   return (
-    <div>
-      <h2>My Account</h2>
+    <div className="account-container">
+      <h2>Registration</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <br />
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={user.name}
-          onChange={handleChange}
-        />
-        <br />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={user.email}
-          onChange={handleChange}
-        />
-        <br />
-        <label htmlFor="address">Address:</label>
+        <div className="form-group">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={user.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={user.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="address">Address:</label>
+          <textarea
+            id="address"
+            name="address"
+            value={user.address}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <div className="form-group">
+          <label htmlFor="pincode">Pincode:</label>
+          <input
+            type="text"
+            id="pincode"
+            name="pincode"
+            value={user.pincode}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="phone">Phone Number:</label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            value={user.phone}
+            onChange={handleChange}
+          />
+        </div>
 
-        <textarea
-          id="address"
-          name="address"
-          value={user.address}
-          onChange={handleChange}
-        ></textarea>
-
-        <button type="submit">Update Profile</button>
+        <button type="submit">Register</button>
+        {/* <button type="button">Login</button> */}
       </form>
     </div>
   );

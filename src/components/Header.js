@@ -1,3 +1,7 @@
+//Aashna Firozbhai Chopra
+//Student no- 8919642
+//achopra9642@contestogac.on.ca
+
 import React, { useState } from "react";
 
 function Header({ count, setDisplayFlag }) {
@@ -82,18 +86,6 @@ function AccountForm({ onSubmit }) {
           style={{ fontSize: "1.2rem" }}
         ></textarea>
         <br />
-        <label htmlFor="country" style={{ fontSize: "1.2rem" }}>
-          Country:
-        </label>
-        <br />
-        <input
-          type="text"
-          id="country"
-          name="country"
-          value={userDetails.country}
-          onChange={handleChange}
-          style={{ fontSize: "1.2rem" }}
-        />
         <br />
         <label htmlFor="pincode" style={{ fontSize: "1.2rem" }}>
           Pincode:
